@@ -1,4 +1,4 @@
-package sample;
+package today.vse;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -1,4 +1,4 @@
-package sample;
+package today.vse;
 
 import java.io.IOException;
 import java.nio.file.*;

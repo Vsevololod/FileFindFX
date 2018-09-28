@@ -9,6 +9,17 @@
     <version>1.1</version>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>javafx</artifactId>
+            <version>2.2.3</version>
+            <scope>system</scope>
+            <systemPath>/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/jfxrt.jar</systemPath>
+        </dependency>
+    </dependencies>
+
+
     <build>
         <plugins>
             <plugin>
