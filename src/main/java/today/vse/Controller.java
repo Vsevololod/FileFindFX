@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
@@ -19,10 +21,15 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Controller {
 
-    public TabPane mainTabPane;
+
     private ConcurrentLinkedQueue<Path> filePatchQueue = new ConcurrentLinkedQueue<>();
     private Path rootPath = Paths.get(System.getProperty("user.dir"));
     private TreeItem<Path> rootTreeItem = new TreeItem<>(rootPath);
+
+    public TabPane mainTabPane;
+
+    @FXML
+    public ChoiceBox<String> charsetBox;
 
     @FXML
     public TextField searchText;
@@ -84,7 +91,7 @@ public class Controller {
     private void setListeners() {
 
         searchButton.setOnMouseClicked(mouseEvent -> {
-            FileSearchThread fileSearch = new FileSearchThread(rootPath, searchPattern.getText(), searchText.getText(), filePatchQueue);
+            FileSearchThread fileSearch = new FileSearchThread(rootPath, searchPattern.getText(), searchText.getText(), filePatchQueue,charsetBox.getValue());
             fileSearch.run();
             try {
                 fileSearch.join();
@@ -132,6 +139,16 @@ public class Controller {
 
         rootPathField.setText(rootPath.toString());
         mainTreeView.setRoot(rootTreeItem);
+
+
+        charsetBox.getItems().add(StandardCharsets.UTF_8.name());
+        charsetBox.getItems().add(StandardCharsets.US_ASCII.name());
+        charsetBox.getItems().add(StandardCharsets.ISO_8859_1.name());
+        if(Charset.isSupported("windows-1251")){
+            charsetBox.getItems().add("windows-1251");
+        }
+        charsetBox.setValue(StandardCharsets.UTF_8.name());
+
 
         setListeners();
 
